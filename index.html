@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Калькулятор</title>
+    <script src="js/script.js"></script>
+    <link rel="stylesheet" href="css/main.css">
+</head>
+
+<body>
+    <h2>Алгоритм Флойда - Уоршелла</h2>
+
+    <table class="container" id="graphTable">
+        <thead>
+            <tr>
+                <th>
+                    <h1>Начальная вершина</h1>
+                </th>
+                <th>
+                    <h1>Конечная вершина</h1>
+                </th>
+                <th>
+                    <h1>Вес ребра между вершинами</h1>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><input type="text" name="startNode" placeholder="Введите значение" required /></td>
+                <td><input type="text" name="endNode" placeholder="Введите значение" required /></td>
+                <td><input type="text" name="weight" placeholder="Введите значение" required /></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="buttons-container">
+        <button class="button-arounder" id="addRowBtn">Добавить строку</button>
+        <button class="button-arounder" id="getGraphDataBtn">Получить результат</button>
+        <input class="button-arounder" placeholder="Степень матрицы" type="number" id="matrixPower" min="4">
+    </div>
+
+</body>
+
+</html>
