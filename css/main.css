@@ -47,7 +47,7 @@ h2 a {
     font-weight: bold;
     font-size: 1.5em;
     text-align: left;
-    color: #366780;
+    color: wheat
 }
 
 .container td {
@@ -154,7 +154,7 @@ button {
 .button-arounder {
     font-size: 1.5rem;
     background: hsl(214, 30%, 15%);
-    color: hsl(190deg, 10%, 95%);
+    color: wheat;
     margin-left: 1.5rem;
     margin-right: 1.5rem;
 
@@ -189,6 +189,39 @@ button {
     border-bottom-left-radius: var(--radius);
     border-bottom-right-radius: var(--radius);
 }
+
+
+.media {
+    background-position: center;
+    background-size: cover;
+    height: 100%;
+}
+
+.card-body {
+    text-align: center;
+    font-size: 20px;
+    color: wheat;
+    height: 100%;
+    padding: 30px 20px 50px;
+}
+
+
+.title {
+    text-align: center;
+    color: wheat;
+    font-family: "Playfair Display SC";
+    font-size: 30px;
+    font-weight: 400;
+}
+
+.divider {
+    background: wheat;
+    height: 2px;
+    margin: 25px auto;
+    width: 40px;
+}
+
+
 
 @media (max-width: 800px) {
 
