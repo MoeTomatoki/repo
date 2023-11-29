@@ -4,9 +4,7 @@ document.addEventListener('DOMContentLoaded', function () {
     let graphData = [];
     function handleClick() {
         getGraphData();
-        console.log(matrixSize);
-        // если лень вводить значения))0
-        if (graphData.length<=3) {
+        if (graphData.length <= 3) {
             graphData = [
                 '121',
                 '231',
@@ -15,18 +13,14 @@ document.addEventListener('DOMContentLoaded', function () {
                 '341'
             ];
         }
-
-        // Инициализация матрицы весов
         let matrWeight = Array.from({ length: matrixSize }, () => Array(matrixSize).fill(null));
         let matrRoad = Array.from({ length: matrixSize }, () => Array(matrixSize).fill(0));
-        // Заполнение матрицы весов на основе условий
         graphData.forEach(strData => {
             let i = parseInt(strData[0]) - 1;
             let j = parseInt(strData[1]) - 1;
             let weight = parseInt(strData[2]);
             matrWeight[i][j] = weight;
         });
-        // Обработка дополнительных условий
         for (let i = 0; i < matrixSize; i++) {
             matrWeight[i][i] = 0;
         }
@@ -37,7 +31,6 @@ document.addEventListener('DOMContentLoaded', function () {
                 }
             })
         });
-
         console.log('W(0) и Z(0) матрицы')
         console.log('Матрица весов:')
         matrWeight.forEach(strElems => {
@@ -47,29 +40,19 @@ document.addEventListener('DOMContentLoaded', function () {
         matrRoad.forEach(strElems => {
             console.log(strElems);
         });
-
+        console.log('')
         let matrWeightNew = JSON.parse(JSON.stringify(matrWeight));
         let matrRoadNew = JSON.parse(JSON.stringify(matrRoad));
-
-        //Работа алгоритма
         for (let k = 1; k <= matrixSize; k++) {
-
-            //Нахождение Декартово произведения
             let ai = iterateMatrix(matrWeightNew, matrixSize, k, "row");
             let aj = iterateMatrix(matrWeightNew, matrixSize, k, "column");
             let descartMult = cartesianProduct(ai, aj);
-            // console.log('К равно:', k);
-            // console.log(ai, aj);
-            // console.log(descartMult);
-
             let intermResult = mainFunc(matrWeightNew, matrWeight, matrRoadNew, matrRoad, descartMult, k);
             matrWeightNew = intermResult['newWeight'];
             matrRoad = intermResult['newRoad'];
-
             matrWeight = matrWeightNew;
             matrRoad = matrRoadNew;
-
-            //Вывод знанчения
+            console.log('')
             console.log(`Это k = ${k}`);
             console.log(`Матрица весов W(${k}):`);
             matrWeight.forEach(strElems => {
@@ -79,6 +62,7 @@ document.addEventListener('DOMContentLoaded', function () {
             matrRoad.forEach(strElems => {
                 console.log(strElems);
             });
+            console.log('')
         }
     }
     function addRow() {
@@ -91,8 +75,8 @@ document.addEventListener('DOMContentLoaded', function () {
             const input = document.createElement("input");
             input.type = "text";
             input.name = (i === 0) ? "startNode" : ((i === 1) ? "endNode" : "weight");
-            input.placeholder="Введите значение";
-            input.required=true;
+            input.placeholder = "Введите значение";
+            input.required = true;
             cells[i].appendChild(input);
         }
     }
@@ -100,7 +84,6 @@ document.addEventListener('DOMContentLoaded', function () {
         const table = document.getElementById("graphTable");
         const rows = table.getElementsByTagName('tbody')[0].getElementsByTagName('tr');
         graphData = [];
-
         for (let i = 0; i < rows.length; i++) {
             const cells = rows[i].getElementsByTagName('td');
             const startNode = cells[0].getElementsByTagName('input')[0].value;
@@ -116,22 +99,17 @@ document.addEventListener('DOMContentLoaded', function () {
         const matrixPowerInput = document.getElementById("matrixPower");
         if (matrixPowerInput.value !== "") {
             matrixSize = parseInt(matrixPowerInput.value, 10);
-            console.log(matrixSize);
+            console.log('Размер матрицы:', matrixSize);
         }
-        
     }
     document.getElementById("addRowBtn").addEventListener("click", addRow);
     document.getElementById("getGraphDataBtn").addEventListener("click", handleClick);
     document.getElementById("matrixPower").addEventListener("click", additionalChecks);
-
     function isNumber(value) {
         return typeof value === 'number' && isFinite(value);
     }
-
-    //костыльная функция-перебор матрицы для взятия А-iтого и A-jтого множества
     function iterateMatrix(matrWeight, matrixSize, k, direction) {
         const resultArray = [];
-
         if (direction === "row") {
             for (let i = 0; i < matrixSize; i++) {
                 for (let j = 0; j < matrixSize; j++) {
@@ -151,24 +129,17 @@ document.addEventListener('DOMContentLoaded', function () {
         } else {
             console.error("Invalid direction. Use 'row' or 'column'.");
         }
-
         return resultArray;
     }
-
-    //Пары в декартовом произведении
     function cartesianProduct(setA, setB) {
         const result = [];
-
         for (let i = 0; i < setA.length; i++) {
             for (let j = 0; j < setB.length; j++) {
                 result.push(String(setA[i]) + String(setB[j]));
             }
         }
-
         return result;
     }
-
-    //Основная функция
     function mainFunc(matrWeightNew, matrWeight, matrRoadNew, matrRoad, descartMult, k) {
         k -= 1
         for (let i = 0; i < matrixSize; i++) {
@@ -181,7 +152,6 @@ document.addEventListener('DOMContentLoaded', function () {
                             matrWeightNew[i][j] = matrWeight[k][j] + matrWeight[i][k]
                             roadFlag = true;
                         } else {
-
                             if (matrWeight[i][j] > matrWeight[k][j] + matrWeight[i][k]) {
                                 matrWeightNew[i][j] = matrWeight[k][j] + matrWeight[i][k];
                                 roadFlag = true;
@@ -191,12 +161,11 @@ document.addEventListener('DOMContentLoaded', function () {
                             }
                         }
                         if (roadFlag) {
-                            console.log(matrRoad[k][j], 'dsadasda');
+                            console.log(`Значение растояния в ${i + 1}:${j + 1} заменено на ${matrRoad[k][j]}`);
                             matrRoadNew[i][j] = matrRoad[k][j]
                         }
                     }
                 });
-
             }
         }
         const result = {
@@ -205,4 +174,24 @@ document.addEventListener('DOMContentLoaded', function () {
         }
         return result
     }
+    (function () {
+        var old = console.log;
+        var logger = document.getElementById('log');
+        console.log = function (message) {
+            if (typeof message === 'object') {
+                let matrix = (JSON && JSON.stringify ? JSON.stringify(message) : message);
+                if (Array.isArray(message)) {
+                    let arrayMessage = JSON.parse(JSON.stringify(message));
+                    arrayMessage.forEach((elem, index, arr) => {
+                        arr[index] = isNumber(elem) ? elem : '&#8734;';
+                    });
+                    logger.innerHTML += arrayMessage + '<br />';
+                } else {
+                    logger.innerHTML += matrix + '<br />';
+                }
+            } else {
+                logger.innerHTML += message + '<br />';
+            }
+        }
+    })();
 });
